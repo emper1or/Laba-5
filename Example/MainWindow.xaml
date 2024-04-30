@@ -2,10 +2,10 @@
     x:Class="Example.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:System="clr-namespace:System;assembly=System.Runtime"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Example"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:System="clr-namespace:System;assembly=System.Runtime"
     Title="MainWindow"
     Width="1000"
     Height="450"
@@ -16,7 +16,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <ListView Margin="345,10,10,10" ItemsSource="{Binding Employees}">
+        <ListView Margin="345,10,10,10" ItemsSource="{Binding Employees}" SelectedItem="{Binding SelectedEmployee}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn
@@ -28,7 +28,7 @@
                         DisplayMemberBinding="{Binding PrepodName}"
                         Header="Преподователь" />
                     <GridViewColumn
-                        Width="80"
+                        Width="85"
                         DisplayMemberBinding="{Binding Difficultu}"
                         Header="Сложность" />
                     <GridViewColumn
@@ -37,7 +37,7 @@
                         Header="Дата" />
                     <GridViewColumn
                         Width="140"
-                        DisplayMemberBinding="{Binding DateOfStartWork}"
+                        DisplayMemberBinding="{Binding DateOfStartWorkToString}"
                         Header="Дата начала подготовки" />
                 </GridView>
             </ListView.View>

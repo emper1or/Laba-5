@@ -10,8 +10,9 @@ namespace ViewModel
 {
     public class ViewModel1 : INotifyPropertyChanged
     {
-        public ObservableCollection<Employee> Employees {  get; private  set; }
+        public ObservableCollection<Employee> Employees { get; private set; }
         private Employee _newEmployee;
+        private Employee _selectedEmploye;
 
         public ViewModel1()
         {
@@ -25,6 +26,18 @@ namespace ViewModel
             {
                 _newEmployee = value;
                 OnPropertyChanged("NewEmployee");
+            }
+        }
+        public Employee SelectedEmployee
+        {
+            get
+            {
+                return _selectedEmploye;
+            }
+            set
+            {
+                _selectedEmploye = value;
+                OnPropertyChanged("SelectedEmployee");
             }
         }
         public event PropertyChangedEventHandler PropertyChanged;
@@ -44,40 +57,54 @@ namespace ViewModel
         {
             if (Employees.Contains(NewEmployee) == false)
             {
-                if (NewEmployee.SelectedDate < DateTime.Today.AddDays(14) || NewEmployee.Difficultu == "" ||
-                    NewEmployee.Name == "" || NewEmployee.PrepodName == "")
+                if (NewEmployee.DateOfStartWork < DateTime.Today || NewEmployee.Difficultu == "" ||
+                     NewEmployee.Name == "" || NewEmployee.PrepodName == "")
                 {
                 }
                 else
                 {
                     Employees.Add(NewEmployee);
-                    NewEmployee = new Employee(); }
-                
-                
+                    NewEmployee = new Employee();
+                }
+
+
             }
+
+
+
         }
 
         public void RemoveEmployee()
         {
-            var i_1 = -1;
-            for (int i = 0;  i < Employees.Count; i++) 
+            if (SelectedEmployee == null)
             {
-                if (Employees[i].Name.Equals(NewEmployee.Name) & Employees[i].PrepodName.Equals(NewEmployee.PrepodName) & Employees[i].SelectedDate.Equals(NewEmployee.SelectedDate) & Employees[i].Difficultu.Equals(NewEmployee.Difficultu))
+                var i_1 = -1;
+                for (int i = 0; i < Employees.Count; i++)
                 {
-                    i_1 = i;
-                    break;
+                    if (Employees[i].Name.Equals(NewEmployee.Name) & Employees[i].PrepodName.Equals(NewEmployee.PrepodName) /*& Employees[i].SelectedDate.Equals(NewEmployee.SelectedDate) & Employees[i].Difficultu.Equals(NewEmployee.Difficultu)*/)
+                    {
+                        i_1 = i;
+                        break;
+                    }
+
                 }
-                
+
+                if (i_1 == -1) return;
+                Employees.RemoveAt(i_1);
+                NewEmployee = new Employee();
             }
 
-            if (i_1 == -1) return;
-            Employees.RemoveAt(i_1);
-            NewEmployee = new Employee();
+            else
+            {
+                Employees.Remove(SelectedEmployee);
+                NewEmployee = new Employee();
+
+            }
 
         }
 
 
-        
+
 
 
     }

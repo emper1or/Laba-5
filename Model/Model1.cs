@@ -70,15 +70,41 @@ namespace Model
             }
         }
 
-        public string DateOfStartWork
+        public DateTime DateOfStartWork
         {
             get
 
             {
-                return SelectedDate.AddDays(-14).ToString("M/d/yyyy").Replace('.','/');
+                if (Difficultu == "Легко")
+                {
+                    return SelectedDate;
+
+                }
+                else if (Difficultu == "Сложно")
+                {
+                    return SelectedDate.AddDays(-14);
+                }
+                else if (Difficultu == "Невозможно")
+                {
+                    return SelectedDate.AddMonths(-1);
+                }
+                return SelectedDate;
+
             }
             set { }
         }
+
+
+        public string DateOfStartWorkToString
+        {
+            get
+            {                
+                return DateOfStartWork.ToString("M/d/yyyy").Replace('.', '/');
+            }
+            set { }
+        }
+        
+
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(string propertyName)
